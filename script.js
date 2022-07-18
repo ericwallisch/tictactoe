@@ -2,53 +2,61 @@ const playerFactory = (name, token) => {
     return {name, token}
 };
 
-(function() {
-    var game = {
-        gameBoard : [' ',' ',' ',' ',' ',' ',' ',' ',' '],
-        players : [],
-        init: function() {
-            this.cacheDom();
-            this.bindEvents()
-            this.render();
-        },
-        cacheDom: function() {
-            //get DOM elements
-            this.cells = document.getElementsByClassName('cell');
-        },
-        bindEvents: function() {
-            //bind click events
-            for (var i = 0; i < 9; i++) {
-                this.cells[i].addEventListener('click', this.selectCell.bind(this));
-            }
-        },
-        render: function() {
 
-            //update DOM
-        },
-        addPlayer: function(player) {
-            //add player to game
-        },
-        selectCell: function(e) {
-            //if cell empty, select and add to gameBoard
-            console.log(this.cells[e.target.id]);
-            console.log(e.target.id);
-            if (this.cells[e.target.id].textContent === " ") {
-                //edit token to token of player
-                this.cells[e.target.id].textContent = 'X';
-                this.render();
-                this.checkForGameEnd;
-            }
-            else {
-                console.log('already selected')
-            }
-        },
-        checkForGameEnd: function() {
-            //checkForWinner
-            //winning combinations: 012, 345, 678, 036, 147, 258, 048, 642
-            //check for full board
+const gameBoard = (() => {
+    const board = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
+    const players = [];
+    const init = () => {
+        cacheDom();
+        bindEvents()
+        render();
+    };
+    const cacheDom = () => {
+        //get DOM elements
+        cells = document.getElementsByClassName('cell');
+    };
+    const bindEvents = () => {
+        //bind click events
+        for (var i = 0; i < 9; i++) {
+            cells[i].addEventListener('click', selectCell.bind(this));
         }
-    }
-    game.init();
-    const eric = playerFactory('Eric', 'X')
+    };
+    const render = () => {
 
+        //update DOM
+    };
+    const addPlayer = (player) => {
+        players.push(player);
+    };
+    const selectCell = (e) => {
+        //if cell empty, select and add to gameBoard
+        if (cells[e.target.id].textContent === " ") {
+            //edit token to token of player
+            cells[e.target.id].textContent = 'X';
+            board[e.target.id] = 'X';
+            render();
+            checkForGameEnd;
+        }
+        else {
+            console.log('already selected')
+        }
+    };
+    const checkForGameEnd = () => {
+        //checkForWinner
+        //winning combinations: 012, 345, 678, 036, 147, 258, 048, 642
+        //check for full board
+    };
+    const reset = () => {
+        //empty all cells
+    };
+    return {
+        init,
+        addPlayer,
+        selectCell,
+        checkForGameEnd,
+        reset
+    };
 })();
+
+gameBoard.init();
+
